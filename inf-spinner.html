@@ -21,31 +21,37 @@
     </style>
 
     <svg viewBox="0 0 135 115">
-        <polygon fill="#6BB327" opacity="0.9">
-            <animate id="face1anim1" dur="0.2" begin="0s;face1anim2.end+0.5s" fill="freeze"
-                attributeName="points" values="65,0 65,0 65,50 65,50; 0,40 65,0 65,50 0,90"/>
-            <animate id="face1anim2" dur="0.2" begin="face1anim1.end+0.5s" fill="freeze"
-                attributeName="points" values="0,40 65,0 65,50 0,90; 0,40 0,40 0,90 0,90"/>
+        <polygon fill="#6BB327" opacity="0.9" points="0,40 65,0 65,50 0,90">
+            <animate id="face1anim1" dur="0.2" begin="0s; face2anim2.end" fill="freeze"
+                attributeName="points" values="0,40 65,0 65,50 0,90; 0,40 0,40 0,90 0,90"
+                calcMode="spline" keySplines="0,0,.5,1" />
+            <animate id="face1anim2" dur="0.2" begin="face2anim1.end" fill="freeze"
+                attributeName="points" values="65,0 65,0 65,50 65,50; 0,40 65,0 65,50 0,90"
+                calcMode="spline" keySplines="0,0,.5,1" />
         </polygon>
-        <polygon fill="#FFFFFF" opacity="0.5">
+        <polygon fill="#FFFFFF" opacity="0.5" points="0,40 70,65 70,115 0,90">
             <animate id="face2anim1" dur="0.2s" begin="face1anim1.end" fill="freeze"
-                attributeName="points" values="0,40 0,40 0,90 0,90; 0,40 70,65 70,115 0,90"/>
+                attributeName="points" values="0,40 70,65 70,115 0,90; 70,65 70,65 70,115 70,115"
+                calcMode="spline" keySplines=".5,0,1,1" />
             <animate id="face2anim2" dur="0.2s" begin="face1anim2.end" fill="freeze"
-                attributeName="points" values="0,40 70,65 70,115 0,90; 70,65 70,65 70,115 70,115"/>
+                attributeName="points" values="0,40 0,40 0,90 0,90; 0,40 70,65 70,115 0,90"
+                calcMode="spline" keySplines=".5,0,1,1" />
         </polygon>
         <polygon fill="#6BB327" opacity="0.9">
-            <animate id="face3anim1" dur="0.2s" begin="face1anim2.begin" fill="freeze"
-                attributeName="points" values="70,65 70,65 70,115 70,115; 70,65 135,25 135,75 70,115"/>
-            <animate id="face3anim2" dur="0.2s" begin="face1anim1.begin" fill="freeze"
-                attributeName="points" values="70,65 135,25 135,75 70,115; 135,25 135,25 135,75 135,75"/>
-            <!-- <animate dur="0.5s" begin="1s" attributeName="points" values="70,65 135,25 135,75 70,115; 135,25 135,25 135,75 135,75"/> -->
+            <animate id="face3anim1" dur="0.2s" begin="face1anim1.begin" fill="freeze"
+                attributeName="points" values="70,65 70,65 70,115 70,115; 70,65 135,25 135,75 70,115"
+                calcMode="spline" keySplines="0,0,.5,1" />
+            <animate id="face3anim2" dur="0.2s" begin="face4anim1.end" fill="freeze"
+                attributeName="points" values="70,65 135,25 135,75 70,115; 135,25 135,25 135,75 135,75"
+                calcMode="spline" keySplines="0,0,.5,1" />
         </polygon>
         <polygon fill="#FFFFFF" opacity="0.5">
             <animate id="face4anim1" dur="0.2s" begin="face3anim1.end" fill="freeze"
-                attributeName="points" values="135,25 135,25 135,75 135,75; 65,0 135,25 135,75 65,50"/>
+                attributeName="points" values="135,25 135,25 135,75 135,75; 65,0 135,25 135,75 65,50"
+                calcMode="spline" keySplines=".5,0,1,1" />
             <animate id="face4anim2" dur="0.2s" begin="face3anim2.end" fill="freeze"
-                attributeName="points" values="65,0 135,25 135,75 65,50; 65,0 65,0 65,50 65,50"/>
-            <!-- <animate dur="0.5s" begin="1.5s" attributeName="points" values="65,0 135,25 135,75 65,50; 65,0 65,0 65,50 65,50"/> -->
+                attributeName="points" values="65,0 135,25 135,75 65,50; 65,0 65,0 65,50 65,50"
+                calcMode="spline" keySplines=".5,0,1,1" />
         </polygon>
     </svg>
 
