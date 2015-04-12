@@ -14,6 +14,10 @@
             height: 60px;
         }
 
+        :host(:not([spinning])) {
+            display: none;
+        }
+
         svg {
             position: absolute;
             top: 0; right: 0; bottom: 0; left: 0;
@@ -24,22 +28,22 @@
 
     <svg viewBox="0 0 135 115">
         <polygon fill="#6BB327" opacity="0.9">
-            <animate dur="0.8s" begin="0s" fill="freeze" repeatCount="indefinite" attributeName="points"
+            <animate dur="0.8s" begin="indefinite" fill="remove" repeatCount="indefinite" attributeName="points"
                 values="65,0 65,0 65,50 65,50; 0,40 65,0 65,50 0,90; 0,40 65,0 65,50 0,90; 0,40 0,40 0,90 0,90; 0,40 0,40 0,90 0,90"
                 calcMode="spline" keySplines="0 0 .5 1;0 0 .5 1;0 0 .5 1;0 0 .5 1" />
         </polygon>
         <polygon fill="#FFFFFF" opacity="0.5">
-            <animate dur="0.8s" begin="0.2s" fill="freeze" repeatCount="indefinite" attributeName="points"
+            <animate dur="0.8s" begin="indefinite" fill="remove" repeatCount="indefinite" attributeName="points"
                 values="0,40 0,40 0,90 0,90; 0,40 70,65 70,115 0,90; 0,40 70,65 70,115 0,90; 70,65 70,65 70,115 70,115; 70,65 70,65 70,115 70,115"
                 calcMode="spline" keySplines=".5 0 1 1;.5 0 1 1;.5 0 1 1;.5 0 1 1" />
         </polygon>
         <polygon fill="#6BB327" opacity="0.9">
-            <animate dur="0.8s" begin="0.4s" fill="freeze" repeatCount="indefinite" attributeName="points"
+            <animate dur="0.8s" begin="indefinite" fill="remove" repeatCount="indefinite" attributeName="points"
                 values="70,65 70,65 70,115 70,115; 70,65 135,25 135,75 70,115; 70,65 135,25 135,75 70,115; 135,25 135,25 135,75 135,75; 135,25 135,25 135,75 135,75"
                 calcMode="spline" keySplines="0 0 .5 1;0 0 .5 1;0 0 .5 1;0 0 .5 1" />
         </polygon>
         <polygon fill="#FFFFFF" opacity="0.5">
-            <animate dur="0.8s" begin="0.6s" fill="freeze" repeatCount="indefinite" attributeName="points"
+            <animate dur="0.8s" begin="indefinite" fill="remove" repeatCount="indefinite" attributeName="points"
                 values="135,25 135,25 135,75 135,75; 65,0 135,25 135,75 65,50; 65,0 135,25 135,75 65,50; 65,0 65,0 65,50 65,50; 65,0 65,0 65,50 65,50"
                 calcMode="spline" keySplines=".5 0 1 1;.5 0 1 1;.5 0 1 1;.5 0 1 1" />
         </polygon>
@@ -52,6 +56,33 @@
     'use strict';
 
     Polymer({
+
+        publish: {
+            spinning: {
+                value: false,
+                reflect: true
+            }
+        },
+
+        spinningChanged: function() {
+            var anims = this.shadowRoot.querySelectorAll('animate');
+            var spinning = this.spinning;
+            Array.prototype.forEach.call(anims, function(anim, i) {
+                spinning ? anim.beginElementAt(i * 0.2 - 0.4) : anim.endElement();
+            });
+        },
+
+        start: function() {
+            this.spinning = true;
+        },
+
+        stop: function() {
+            this.spinning = false;
+        },
+
+        toggle: function() {
+            this.spinning = !this.spinning;
+        }
 
     });
 })();

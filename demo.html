@@ -12,18 +12,31 @@
     </head>
     <body>
 
-        <polymer-element name="inf-spinner-demo" layout vertical center center-justified noscript>
+        <polymer-element name="inf-spinner-demo" layout vertical center center-justified>
             <template>
 
                 <style>
                     :host {
                         background: #303040;
                     }
+
+                    button {
+                        margin-top: 20px;
+                    }
                 </style>
 
-                <inf-spinner></inf-spinner>
+                <inf-spinner id="spinner" spinning></inf-spinner>
+
+                <button on-tap="{{ toggleSpinner }}">Start / Stop</button>
 
             </template>
+            <script>
+                Polymer({
+                    toggleSpinner: function() {
+                        this.$.spinner.toggle();
+                    }
+                });
+            </script>
         </polymer-element>
 
         <inf-spinner-demo fit></inf-spinner-demo>
