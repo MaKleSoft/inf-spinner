@@ -64,6 +64,10 @@
             }
         },
 
+        domReady: function() {
+            this.spinningChanged();
+        },
+
         spinningChanged: function() {
             var anims = this.shadowRoot.querySelectorAll('animate');
             var spinning = this.spinning;
