@@ -1,5 +1,16 @@
 <!--
 @element inf-spinner
+Shows a loading animation with Infusionsoft branding.
+
+As an alternative to using the `<inf-spinner>` element, this component also provides a `spinner.svg` file
+for use in `<img>` elements.
+
+Example usage:
+
+    <inf-spinner active></inf-spinner>
+
+    <img src="inf-spinner/spinner.svg"/>
+
 -->
 <link rel="import" href="../polymer/polymer.html">
 
@@ -14,7 +25,7 @@
             height: 60px;
         }
 
-        :host(:not([spinning])) {
+        :host(:not([active])) {
             display: none;
         }
 
@@ -58,34 +69,62 @@
     Polymer({
 
         publish: {
-            spinning: {
+            /**
+             * @attribute active
+             * @default false
+             * Determines whether or not the spinning animation is active. By default, the spinners display
+             * property is set to `none` while this property is `false`. If you want a different behaviour,
+             * simply override the styling using the `:not([active])` selector. E.g.:
+             *
+             *     inf-spinner:not([active]) {
+             *         display: block;
+             *         visibility: hidden;
+             *     }
+             */
+            active: {
                 value: false,
                 reflect: true
             }
         },
 
         domReady: function() {
-            this.spinningChanged();
+            this.activeChanged();
         },
 
-        spinningChanged: function() {
+        activeChanged: function() {
             var anims = this.shadowRoot.querySelectorAll('animate');
-            var spinning = this.spinning;
+            var active = this.active;
+            // Start/stop animations based on `active` property. We could simply set the `begin` property
+            // in the svg to the approprivate values and just keep the animation running, but that requires
+            // constant work by the browser. Better to stop the animation to free up some cpu cycles.
             Array.prototype.forEach.call(anims, function(anim, i) {
-                spinning ? anim.beginElementAt(i * 0.2 - 0.4) : anim.endElement();
+                active ? anim.beginElementAt(i * 0.2 - 0.4) : anim.endElement();
             });
         },
 
+        /**
+         * @method start
+         * Convenience method for starting the spinning animation. Equivalent to `spinner.active = true`
+         */
         start: function() {
-            this.spinning = true;
+            this.active = true;
         },
 
+        /**
+         * @method stop
+         * Convenience method for stopping the spinning animation. Equivalent to `spinner.active = false`
+         */
         stop: function() {
-            this.spinning = false;
+            this.active = false;
         },
 
+        /**
+         * @method toggle
+         * Convenience method for toggling the spinning animation. Equivalent to
+         * `spinner.active = !spinner.active`
+         */
         toggle: function() {
-            this.spinning = !this.spinning;
+            this.active = !this.active;
         }
 
     });
