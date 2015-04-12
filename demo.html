@@ -18,16 +18,26 @@
                 <style>
                     :host {
                         background: #303040;
+                        color: white;
+                        font-family: monospace;
                     }
 
                     button {
-                        margin-top: 20px;
+                        margin: 20px;
+                    }
+
+                    img {
+                        width: 60px;
                     }
                 </style>
 
+                <h3>&lt;inf-spinner spinning&gt;&lt;/inf-spinner&gt;</h3>
                 <inf-spinner id="spinner" spinning></inf-spinner>
 
                 <button on-tap="{{ toggleSpinner }}">Start / Stop</button>
+
+                <h3>&lt;img src="spinner.svg"/&gt;</h3>
+                <img src="spinner.svg" />
 
             </template>
             <script>
