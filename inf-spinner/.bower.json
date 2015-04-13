@@ -1,0 +1,32 @@
+{
+  "name": "inf-spinner",
+  "authors": [
+    "Martin Kleinschrodt <martin@maklesoft.com>"
+  ],
+  "main": "inf-spinner.html",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.5.5"
+  },
+  "devDependencies": {
+    "core-component-page": "Polymer/core-component-page#~0.5.5"
+  },
+  "_release": "eb06af6e10",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "eb06af6e10f1fb43c24dad4f3a00425ba46af1f0"
+  },
+  "_source": "/Users/martin/workspace/polymer-tools/bin/inf-spinner",
+  "_target": "master",
+  "_originalSource": "./",
+  "_direct": true
+}

@@ -1,0 +1,134 @@
+<!--
+@element inf-spinner
+Shows a loading animation with Infusionsoft branding.
+
+As an alternative to using the `<inf-spinner>` element, this component also provides a `spinner.svg` file
+for use in `<img>` elements.
+
+Example usage:
+
+    <inf-spinner active></inf-spinner>
+
+    <img src="inf-spinner/spinner.svg"/>
+
+-->
+<link rel="import" href="../polymer/polymer.html">
+
+<polymer-element name="inf-spinner">
+
+<template>
+    <style>
+        :host {
+            display: block;
+            position: relative;
+            width: 60px;
+            height: 60px;
+        }
+
+        :host(:not([active])) {
+            display: none;
+        }
+
+        svg {
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            margin: auto;
+        }
+
+    </style>
+
+    <svg viewBox="0 0 135 115">
+        <polygon fill="#6BB327" opacity="0.9">
+            <animate dur="0.8s" begin="indefinite" fill="remove" repeatCount="indefinite" attributeName="points"
+                values="65,0 65,0 65,50 65,50; 0,40 65,0 65,50 0,90; 0,40 65,0 65,50 0,90; 0,40 0,40 0,90 0,90; 0,40 0,40 0,90 0,90"
+                calcMode="spline" keySplines="0 0 .5 1;0 0 .5 1;0 0 .5 1;0 0 .5 1" />
+        </polygon>
+        <polygon fill="#FFFFFF" opacity="0.5">
+            <animate dur="0.8s" begin="indefinite" fill="remove" repeatCount="indefinite" attributeName="points"
+                values="0,40 0,40 0,90 0,90; 0,40 70,65 70,115 0,90; 0,40 70,65 70,115 0,90; 70,65 70,65 70,115 70,115; 70,65 70,65 70,115 70,115"
+                calcMode="spline" keySplines=".5 0 1 1;.5 0 1 1;.5 0 1 1;.5 0 1 1" />
+        </polygon>
+        <polygon fill="#6BB327" opacity="0.9">
+            <animate dur="0.8s" begin="indefinite" fill="remove" repeatCount="indefinite" attributeName="points"
+                values="70,65 70,65 70,115 70,115; 70,65 135,25 135,75 70,115; 70,65 135,25 135,75 70,115; 135,25 135,25 135,75 135,75; 135,25 135,25 135,75 135,75"
+                calcMode="spline" keySplines="0 0 .5 1;0 0 .5 1;0 0 .5 1;0 0 .5 1" />
+        </polygon>
+        <polygon fill="#FFFFFF" opacity="0.5">
+            <animate dur="0.8s" begin="indefinite" fill="remove" repeatCount="indefinite" attributeName="points"
+                values="135,25 135,25 135,75 135,75; 65,0 135,25 135,75 65,50; 65,0 135,25 135,75 65,50; 65,0 65,0 65,50 65,50; 65,0 65,0 65,50 65,50"
+                calcMode="spline" keySplines=".5 0 1 1;.5 0 1 1;.5 0 1 1;.5 0 1 1" />
+        </polygon>
+    </svg>
+
+</template>
+
+<script>
+(function() {
+    'use strict';
+
+    Polymer({
+
+        publish: {
+            /**
+             * @attribute active
+             * @default false
+             * Determines whether or not the spinning animation is active. By default, the spinners display
+             * property is set to `none` while this property is `false`. If you want a different behaviour,
+             * simply override the styling using the `:not([active])` selector. E.g.:
+             *
+             *     inf-spinner:not([active]) {
+             *         display: block;
+             *         visibility: hidden;
+             *     }
+             */
+            active: {
+                value: false,
+                reflect: true
+            }
+        },
+
+        domReady: function() {
+            this.activeChanged();
+        },
+
+        activeChanged: function() {
+            var anims = this.shadowRoot.querySelectorAll('animate');
+            var active = this.active;
+            // Start/stop animations based on `active` property. We could simply set the `begin` property
+            // in the svg to the approprivate values and just keep the animation running, but that requires
+            // constant work by the browser. Better to stop the animation to free up some cpu cycles.
+            Array.prototype.forEach.call(anims, function(anim, i) {
+                active ? anim.beginElementAt(i * 0.2 - 0.4) : anim.endElement();
+            });
+        },
+
+        /**
+         * @method start
+         * Convenience method for starting the spinning animation. Equivalent to `spinner.active = true`
+         */
+        start: function() {
+            this.active = true;
+        },
+
+        /**
+         * @method stop
+         * Convenience method for stopping the spinning animation. Equivalent to `spinner.active = false`
+         */
+        stop: function() {
+            this.active = false;
+        },
+
+        /**
+         * @method toggle
+         * Convenience method for toggling the spinning animation. Equivalent to
+         * `spinner.active = !spinner.active`
+         */
+        toggle: function() {
+            this.active = !this.active;
+        }
+
+    });
+})();
+</script>
+
+</polymer-element>
