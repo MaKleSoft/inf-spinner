@@ -68,6 +68,8 @@ Example usage:
 
     Polymer({
 
+        _lastUpdate: 0,
+
         publish: {
             /**
              * @attribute active
@@ -94,12 +96,24 @@ Example usage:
         activeChanged: function() {
             var anims = this.shadowRoot.querySelectorAll('animate');
             var active = this.active;
-            // Start/stop animations based on `active` property. We could simply set the `begin` property
-            // in the svg to the approprivate values and just keep the animation running, but that requires
-            // constant work by the browser. Better to stop the animation to free up some cpu cycles.
-            Array.prototype.forEach.call(anims, function(anim, i) {
-                active ? anim.beginElementAt(i * 0.2 - 0.4) : anim.endElement();
-            });
+            var currTime = new Date().getTime();
+
+            // We have to 'debounce' the animation updates because calling `beginElement` and `endElement`
+            // in quick succession apparently causes problems.
+            clearTimeout(this._updateTimeout);
+
+            this._updateTimeout = setTimeout(function() {
+                // Start/stop animations based on `active` property. We could simply set the `begin` property
+                // in the svg to the approprivate values and just keep the animation running, but that requires
+                // constant work by the browser. Better to stop the animation to free up some cpu cycles.
+                if (active !== this._lastUpdateActive) {
+                    Array.prototype.forEach.call(anims, function(anim, i) {
+                        active ? anim.beginElementAt(i * 0.2 - 0.4) : anim.endElement();
+                    });
+                    this._lastUpdate = currTime;
+                    this._lastUpdateActive = active;
+                }
+            }.bind(this), Math.max(500 - currTime + this._lastUpdate, 0));
         },
 
         /**
